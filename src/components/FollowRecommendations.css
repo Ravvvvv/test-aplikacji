@@ -1,0 +1,32 @@
+.followRecom img {
+    height: 50px;
+    border-radius: 50%;
+ 
+    
+
+}
+
+
+.followRecom{
+    width: 50%;
+    height: 50%;
+    border: 1px solid black;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex  ;
+    max-width:600px;
+    margin: auto;
+    padding: 5px ;
+    border: 1px solid black;
+    text-align: right;
+    
+
+    padding: 5px;
+    justify-content: space-between;
+}
+.singelRecom {
+    border-radius: 1px solid black;
+   
+    
+    
+}

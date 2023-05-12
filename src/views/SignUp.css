@@ -1,0 +1,21 @@
+.singUp form {
+    border: 1px solid black;
+    max-width: 600px;
+    margin: auto;
+    padding: 15px;
+
+}
+
+.singUp form input {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+
+}
+
+.singUp form .btn {
+    display: inline-block;
+    margin: 15px;
+
+}
