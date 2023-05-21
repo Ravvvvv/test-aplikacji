@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import './SignUp.css'
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const SignUp = (props) => {
 
@@ -40,6 +41,8 @@ const SignUp = (props) => {
     console.log(formData);
 
     const [singUpMessage, setSingUpMessage] = useState('');
+    const [singUpDone, setSingUpDone] = useState(false);
+
     const validate = () => {
         let validationErros = {
             username: false,
@@ -112,7 +115,8 @@ const SignUp = (props) => {
                     password: 'za krotki haslo',
                 }
             })
-        } else if (!/^[^/s]*$/.test(formData.password.trim())) {
+        } else if (!/^[^\s]*$/.test(formData.password.trim())
+        ) {
             validationErros.password = true;
             setErrors((prevErrors) => {
                 return {
@@ -120,9 +124,7 @@ const SignUp = (props) => {
                     password: 'nieprowne znaki',
                 }
             });
-        } else if (
-            !/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(formData.password.trim())
-        ) {
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.password.trim())) {
             validationErros.password = true;
             setErrors((prevErrors) => {
                 return {
@@ -157,7 +159,7 @@ const SignUp = (props) => {
             setErrors((prevErrors) => {
                 return {
                     ...prevErrors,
-                    password: '',
+                    reaptPassword: '',
                 };
             });
         }
@@ -199,12 +201,22 @@ const SignUp = (props) => {
 
             .then((res) => {
                 console.log(res.data);
+
                 let resData = res.data;
 
-                if (resData.SignUp) {
+                if (resData.signedup) {
                     setSingUpMessage(' account creat')
+                    setSingUpDone(true)
 
                 } else {
+
+                    if (resData.message.username) {
+                        setSingUpMessage(resData.message.username[0])
+
+                    } else if (resData.message.email) {
+                        setSingUpMessage(resData.message.email[0])
+                    }
+
 
                 }
                 // console.log(res.data);
@@ -234,6 +246,7 @@ const SignUp = (props) => {
             {props.user && <Navigate to="/" />}
             <form onSubmit={handleSubmit}>
                 {singUpMessage && <h2> {singUpMessage}</h2>}
+
                 <input
                     type="text"
                     name="username"
@@ -269,7 +282,12 @@ const SignUp = (props) => {
 
 
 
-                <button className="btn">Sing Up</button>
+                <button className="btn" disabled={true}>Sing Up</button>
+
+                {singUpDone && <div>
+                    <Link to="/login" className="btn">go to login  </Link >
+
+                </div>}
             </form>
         </div>
     )
